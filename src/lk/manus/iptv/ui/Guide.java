@@ -346,6 +346,7 @@ public final class Guide extends FrameLayout {
         cMini.addView(cLogo, new FrameLayout.LayoutParams(-1, -1));
         cTex = new TextureView(ctx);
         cTex.setAlpha(0f);
+        Ui.blurVideo(cTex, 12);
         cMini.addView(cTex, new FrameLayout.LayoutParams(-1, -1, Gravity.CENTER));
         card.addView(cMini, new LinearLayout.LayoutParams(-1, Ui.u(110)));
         mini = new MiniPreview(ctx, new MiniPreview.Listener() {
@@ -957,7 +958,7 @@ public final class Guide extends FrameLayout {
         for (String c : ix.catOrder) if (!hid.contains("cat:" + c)) nk++;
         l1.add(Rail.nav("countries", "🌍 Countries", nc));
         l1.add(Rail.nav("cats", "▦ Categories", nk));
-        l1.add(new Rail("yt", "▶ YouTube Live", YouTubeLive.ALL.size()));
+        if (!(lk.manus.iptv.Config.DEBUG && Ui.demoBlur)) l1.add(new Rail("yt", "▶ YouTube Live", YouTubeLive.ALL.size())); // demo recordings hide this rail
         if (ix.sources.size() > 1) l1.add(Rail.nav("srcs", "▤ My Sources", ix.sources.size()));
         l1.add(new Rail("search", "🔍 Search", -1));
         l1.add(new Rail("settings", "⚙ Settings", -1));

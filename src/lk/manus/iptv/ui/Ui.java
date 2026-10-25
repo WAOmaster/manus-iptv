@@ -25,6 +25,12 @@ public final class Ui {
     private Ui() {}
 
     /** Measure the real window and read the user's display prefs (UX-SPEC 2, 3, 7). Call from every Activity.onCreate (a density / font change recreates it). */
+    /** DEBUG-only (set from PlayerActivity under Config.DEBUG): blur video views for demo recordings. Always false in release. */
+    public static boolean demoBlur;
+    public static void blurVideo(android.view.View v, float r) {
+        if (lk.manus.iptv.Config.DEBUG && demoBlur && android.os.Build.VERSION.SDK_INT >= 31)
+            v.setRenderEffect(android.graphics.RenderEffect.createBlurEffect(r, r, android.graphics.Shader.TileMode.CLAMP));
+    }
     public static void init(Context c) {
         android.util.DisplayMetrics m = c.getResources().getDisplayMetrics();
         density = m.density;

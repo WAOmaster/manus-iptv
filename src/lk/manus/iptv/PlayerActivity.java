@@ -284,6 +284,9 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback {
             if (in.hasExtra("quality")) store.setQuality(in.getStringExtra("quality")); // writes the real prefs
             if (in.hasExtra("mirror")) store.setMirror(in.getBooleanExtra("mirror", false));
             if (in.hasExtra("engine")) prefs.edit().putString("engine", in.getStringExtra("engine")).apply(); // media3 | mediaplayer
+            if (in.hasExtra("demo_blur")) prefs.edit().putBoolean("demo_blur", in.getBooleanExtra("demo_blur", false)).apply(); // demo recordings: blur the video, keep the UI sharp
+            lk.manus.iptv.ui.Ui.demoBlur = prefs.getBoolean("demo_blur", false);
+            if (lk.manus.iptv.ui.Ui.demoBlur) store.setMirror(true); // the blur needs the TextureView
             dbgSub = in.getIntExtra("sub", -1);
             if (in.hasExtra("subsdef")) store.setSubsDefault(in.getBooleanExtra("subsdef", false)); // writes the real prefs
             Log.i(TAG, "DEBUG hooks on: failnext=" + simFailNext + " simdrop=" + simDrop + " sub=" + dbgSub);
@@ -310,6 +313,7 @@ public class PlayerActivity extends Activity implements SurfaceHolder.Callback {
         root.addView(sv, new FrameLayout.LayoutParams(-1, -1));
         tex = new TextureView(this);
         tex.setVisibility(View.GONE);
+        lk.manus.iptv.ui.Ui.blurVideo(tex, 30);
         tex.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
             @Override public void onSurfaceTextureAvailable(SurfaceTexture st, int w, int hh) {
                 texSurface = new Surface(st);
