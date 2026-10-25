@@ -10,6 +10,8 @@ FLAVOR=${FLAVOR:-play}; FEED_URL=${FEED_URL:-}; DEFAULT_IPTVORG=${DEFAULT_IPTVOR
 case "$FLAVOR" in play|full) ;; *) echo "FLAVOR must be play or full"; exit 1;; esac
 [[ "$FEED_URL" =~ ^[A-Za-z0-9:/._~%?=\&-]*$ ]] || { echo "FEED_URL has odd characters"; exit 1; }
 [ "$FLAVOR" = play ] && DEFAULT_IPTVORG=0
+# Play builds never ship the owner's data feed (users add their own); override only with PLAY_FEED_URL.
+[ "$FLAVOR" = play ] && FEED_URL=${PLAY_FEED_URL:-}
 VERSION_CODE=${VERSION_CODE:-1}; VERSION_NAME=${VERSION_NAME:-1.0.0}
 [[ "$VERSION_CODE" =~ ^[0-9]+$ && "$VERSION_NAME" =~ ^[A-Za-z0-9._-]+$ ]] || { echo "bad VERSION_CODE / VERSION_NAME"; exit 1; }
 TARGET_SDK=${TARGET_SDK:-$([ "$FLAVOR" = play ] && echo 35 || echo 34)}
