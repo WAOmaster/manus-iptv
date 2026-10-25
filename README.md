@@ -7,7 +7,8 @@ A fast, remote-friendly live-TV app for Android TV / Google TV. You add your own
 ## What it is and is not
 - It is a **player and guide**. It does not include, host or provide any channels, streams or programme data.
 - You are responsible for the playlists you add. Only add playlists you have the right to use.
-- No accounts, no ads, no analytics. Your playlist links stay on your TV.
+- No accounts, no ads, no analytics of our own. Your playlist links stay on your TV. (Google ML Kit, used for subtitle translation, sends anonymous diagnostics to Google; see the privacy policy.)
+- Website: https://iptv.appcloudpro.com/ · [Privacy policy](https://iptv.appcloudpro.com/privacy.html) · [Support](https://iptv.appcloudpro.com/support.html)
 
 ## Features
 - Add playlists by typing, or send the link from your phone (scan the QR code on the TV; same Wi-Fi).
