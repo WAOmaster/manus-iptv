@@ -3,7 +3,7 @@
 # build.sh always includes libs/jars/*.jar and runs this script itself when libs/jars is missing. Needs curl, unzip, sha256sum (Git Bash has them).
 set -euo pipefail
 cd "$(dirname "$0")/.."
-mkdir -p libs/dl libs/jars libs/native/lib/armeabi-v7a libs/assets libs/res/raw libs/res/xml
+mkdir -p libs/dl libs/jars libs/native/lib/armeabi-v7a libs/native/lib/arm64-v8a libs/assets libs/res/raw libs/res/xml
 rm -f libs/proguard-media3.txt
 while read -r sha url; do
   f=libs/dl/$(basename "$url")
@@ -12,8 +12,9 @@ while read -r sha url; do
   case $f in
     *.aar) n=$(basename "$f" .aar); unzip -qo -j "$f" classes.jar -d libs/jars && mv libs/jars/classes.jar "libs/jars/$n.jar"
            unzip -p "$f" proguard.txt >> libs/proguard-media3.txt 2>/dev/null || true
-           # ML Kit: TV is armeabi-v7a only; models download at runtime. res/ only from translate (metadata json + xml); manifests are merged by hand into AndroidManifest.xml
+           # ML Kit: both TV ABIs (armeabi-v7a + arm64-v8a); models download at runtime. res/ only from translate (metadata json + xml); manifests are merged by hand into AndroidManifest.xml
            unzip -qo -j "$f" 'jni/armeabi-v7a/*.so' -d libs/native/lib/armeabi-v7a 2>/dev/null || true
+           unzip -qo -j "$f" 'jni/arm64-v8a/*.so' -d libs/native/lib/arm64-v8a 2>/dev/null || true
            unzip -qo "$f" 'assets/*' -d libs/ 2>/dev/null || true
            case $n in translate-*) unzip -qo -j "$f" 'res/raw/*' -d libs/res/raw; unzip -qo -j "$f" 'res/xml/*' -d libs/res/xml ;; esac ;;
     *.jar) cp "$f" libs/jars/ ;;
@@ -53,3 +54,7 @@ b6194f7b42034309cf8299784b2d5d70a82a2e9287fbe1650dea4d1f3ad1fe55 https://dl.goog
 91c77044a50c481636c32d916fd89c9118a72195390452c81065080f957de7ff https://repo1.maven.org/maven2/javax/inject/javax.inject/1/javax.inject-1.jar
 7bad7a188804adea6fa1f35d5ef99b705f20bd93ecadde484760ff86b535fefc https://dl.google.com/android/maven2/androidx/lifecycle/lifecycle-common/2.0.0/lifecycle-common-2.0.0.jar
 LIST
+# bundletool (only for tools/build-aab.sh; needs Java 17)
+BT_JAR=libs/dl/bundletool-all-1.18.1.jar
+[ -f "$BT_JAR" ] || curl -sfL -o "$BT_JAR" https://github.com/google/bundletool/releases/download/1.18.1/bundletool-all-1.18.1.jar
+echo "675786493983787ffa11550bdb7c0715679a44e1643f3ff980a529e9c822595c  $BT_JAR" | sha256sum -c --quiet - || { echo "BAD SHA $BT_JAR"; exit 1; }

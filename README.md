@@ -45,6 +45,20 @@ Build options (environment variables, or put them in a git-ignored `local.env`; 
 
 Example: `FLAVOR=full FEED_URL=https://yourname.github.io/manus-iptv-data/ bash build.sh`
 
+## Build for Google Play
+Needs the same tools as above (JDK 17 for `bundletool`, which `tools/fetch-libs.sh` downloads and pins by SHA-256).
+
+```
+FLAVOR=play VERSION_CODE=2 VERSION_NAME=1.0.1 bash build.sh aab
+```
+
+Produces `manus-iptv.aab` (signed with your **upload key**), plus `manus-iptv.apk` and `manus-iptv-universal.apk` (from the bundle, for checking), and runs `bundletool validate`. Play flavour: targetSdk 35, minSdk 26; `VERSION_CODE` must grow with every upload.
+
+- **Upload key:** created on the first run at `~/.android/manus-iptv-upload.jks`, with a random password written to your git-ignored `local.env` (`UPLOAD_KS`, `UPLOAD_KS_PASS`, `UPLOAD_ALIAS`). Back up both; never commit them. Enrol in Play App Signing so Google holds the real signing key.
+- **ABIs:** `armeabi-v7a` and `arm64-v8a` (ML Kit native libraries).
+- **16 KB pages:** native libraries are stored uncompressed and page-aligned (`zipalign -P 16`); `tools/elfalign.py` checks each 64-bit `.so` has 16 KB ELF segment alignment. ML Kit's 32-bit libraries are 4 KB aligned, which Play allows (the rule covers 64-bit code).
+- Play flavour only: Back from the top of the guide asks "Exit Manus IPTV?" so Back eventually reaches Home.
+
 Tests: `bash tools/runtests.sh`.
 
 ## Install on your TV

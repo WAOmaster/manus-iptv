@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# bash build.sh [aab]: with "aab" also builds + signs manus-iptv.aab for Google Play (tools/build-aab.sh).
 # Builds manus-iptv.apk with no Gradle: aapt2 -> javac -> d8 -> zipalign -> apksigner. Run in Git Bash.
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -9,6 +10,8 @@ FLAVOR=${FLAVOR:-play}; FEED_URL=${FEED_URL:-}; DEFAULT_IPTVORG=${DEFAULT_IPTVOR
 case "$FLAVOR" in play|full) ;; *) echo "FLAVOR must be play or full"; exit 1;; esac
 [[ "$FEED_URL" =~ ^[A-Za-z0-9:/._~%?=\&-]*$ ]] || { echo "FEED_URL has odd characters"; exit 1; }
 [ "$FLAVOR" = play ] && DEFAULT_IPTVORG=0
+VERSION_CODE=${VERSION_CODE:-1}; VERSION_NAME=${VERSION_NAME:-1.0.0}
+[[ "$VERSION_CODE" =~ ^[0-9]+$ && "$VERSION_NAME" =~ ^[A-Za-z0-9._-]+$ ]] || { echo "bad VERSION_CODE / VERSION_NAME"; exit 1; }
 TARGET_SDK=${TARGET_SDK:-$([ "$FLAVOR" = play ] && echo 35 || echo 34)}
 SDK=${ANDROID_SDK:-$(cygpath -u "${LOCALAPPDATA:-$HOME/AppData/Local}")/Android/Sdk}
 BT=$SDK/build-tools/${BT_VERSION:-36.1.0}; JAR=$SDK/platforms/android-36/android.jar
@@ -20,7 +23,7 @@ printf 'package lk.manus.iptv;\npublic final class Config {\n  public static fin
 ls libs/jars/translate-*.jar >/dev/null 2>&1 || bash tools/fetch-libs.sh
 LIBS=(libs/jars/*.jar)
 CP="$(cygpath -w "$JAR")"; for j in "${LIBS[@]}"; do CP="$CP;$(cygpath -w "$j")"; done
-sed "s/android:targetSdkVersion=\"[0-9]*\"/android:targetSdkVersion=\"$TARGET_SDK\"/" AndroidManifest.xml > build/AndroidManifest.xml
+sed -e "s/android:targetSdkVersion=\"[0-9]*\"/android:targetSdkVersion=\"$TARGET_SDK\"/" -e "s/android:versionCode=\"[0-9]*\"/android:versionCode=\"$VERSION_CODE\"/" -e "s/android:versionName=\"[^\"]*\"/android:versionName=\"$VERSION_NAME\"/" AndroidManifest.xml > build/AndroidManifest.xml
 "$BT/aapt2.exe" compile --dir res -o build/res.zip
 "$BT/aapt2.exe" compile --dir libs/res -o build/res-mlkit.zip # ML Kit translate's metadata json + xml
 "$BT/aapt2.exe" link -o build/base.apk -I "$JAR" --proguard build/aapt.pro --manifest build/AndroidManifest.xml -A libs/assets --java build/gen --extra-packages com.google.mlkit.nl.translate build/res.zip build/res-mlkit.zip # extra R: the AAR's classes read R.raw / R.xml of their own package
@@ -34,11 +37,15 @@ else
   cmd.exe //c "$(cygpath -w "$BT/d8.bat")" --lib "$(cygpath -w "$JAR")" --output "$(cygpath -w build/dex)" --min-api 26 "$(cygpath -w build/classes.jar)" $(for j in "${LIBS[@]}"; do cygpath -w "$j"; done)
 fi
 (cd build/dex && jar uf ../base.apk classes*.dex)
-(cd libs/native && jar uf ../../build/base.apk lib) # ML Kit native libs (armeabi-v7a only: the TV's ABI)
-"$BT/zipalign.exe" -f 4 build/base.apk build/aligned.apk
+# ML Kit native libs, both TV ABIs (armeabi-v7a + arm64-v8a). Stored uncompressed so zipalign can page-align them.
+(cd libs/native && jar uf0 ../../build/base.apk lib)
+python -I tools/elfalign.py $(find libs/native/lib/arm64-v8a -name '*.so') || echo "WARNING: a 64-bit .so is not 16 KB aligned (Play rejects 64-bit libs like that)"
+"$BT/zipalign.exe" -P 16 -f 4 build/base.apk build/aligned.apk
+"$BT/zipalign.exe" -c -P 16 4 build/aligned.apk
 KS=$HOME/.android/manus-iptv.keystore
 mkdir -p "$HOME/.android"
 [ -f "$KS" ] || keytool -genkeypair -keystore "$KS" -storepass android -keypass android -alias iptv -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Manus IPTV" >/dev/null
 cmd.exe //c "$(cygpath -w "$BT/apksigner.bat")" sign --ks "$(cygpath -w "$KS")" --ks-pass pass:android --out "$(cygpath -w manus-iptv.apk)" "$(cygpath -w build/aligned.apk)"
+[ "${1:-}" = aab ] && . tools/build-aab.sh
 rm -rf build
-echo "built manus-iptv.apk (flavor=$FLAVOR, iptv-org default=$DEFAULT_IPTVORG, feed=${FEED_URL:-none}, targetSdk=$TARGET_SDK)"
+echo "built manus-iptv.apk (flavor=$FLAVOR, iptv-org default=$DEFAULT_IPTVORG, feed=${FEED_URL:-none}, targetSdk=$TARGET_SDK, version=$VERSION_NAME/$VERSION_CODE)"

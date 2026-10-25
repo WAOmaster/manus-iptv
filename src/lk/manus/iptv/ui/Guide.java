@@ -715,6 +715,10 @@ public final class Guide extends FrameLayout {
         if (drill != null) { drill = null; shownId = null; showSection(rails.get(railSel)); return; }
         if (!rail.hasFocus()) { if (level == 2 || "search".equals(shownId)) rail.requestFocus(); else dismiss(true); return; }
         if (level == 2) { exitLevel2(true); return; }
+        if (lk.manus.iptv.Config.PLAY) { // Play TV quality: Back from the top level must eventually reach Home
+            confirm("Exit Manus IPTV?", "", "Yes", "No", new Runnable() { @Override public void run() { host.exitApp(); } });
+            return;
+        }
         dismiss(true);
     }
 
