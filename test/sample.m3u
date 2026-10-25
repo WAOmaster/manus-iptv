@@ -1,0 +1,23 @@
+#EXTM3U
+junk line with no EXTINF before it
+#EXTINF:-1 tvg-id="BBCNews.uk@SD" tvg-logo="https://logo.example/bbc.png" group-title="News;Public",BBC News (720p)
+https://example.com/bbc.m3u8
+#EXTINF:-1,Plain Channel
+http://example.com/plain.ts
+#EXTINF:-1 tvg-id="Foo.us" group-title="Undefined",News, Sports "Live"
+https://example.com/sports.m3u8
+#EXTINF:-1 tvg-id="Kids.DE@HD" group-title="Kids;Music ; ;",Kids Channel [Not 24/7]
+https://example.com/kids.m3u8
+#EXTINF:-1 tvg-id="Opt.fr@SD" group-title="General",Option Channel (1080p)
+#EXTVLCOPT:http-user-agent=Mozilla/5.0 (X11; Linux) Test/1.0
+#EXTVLCOPT:http-referrer=https://example.com/
+https://example.com/opt.m3u8
+#EXTINF:-1 tvg-id="NoUrl.uk@SD",Lost Channel
+#EXTINF:-1 tvg-id="Next.uk@SD",Next Channel
+https://example.com/next.m3u8
+#EXTINF:-1 tvg-id="Geo.es@SD" group-title="News",3Cat Exclusiu 1 (1080p) [Geo-blocked]
+https://example.com/geo.m3u8
+#EXTINF:-1 tvg-id="Bad.uk@SD",Bad Scheme
+ftp://example.com/bad.m3u8
+#EXTINF:-1 group-title="Sports, Live",Rtmp Channel
+rtmp://example.com/live/stream

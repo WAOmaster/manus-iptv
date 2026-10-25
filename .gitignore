@@ -1,0 +1,17 @@
+build/
+*.apk
+*.idsig
+*.keystore
+.env
+spike/results/
+spike/results.csv
+spike/app.csv
+libs/
+local.env
+build-test/
+
+# Private planning/design material lives outside this repo
+PRD.md
+TASKS.md
+design/
+spike/
