@@ -8,6 +8,6 @@ nav{margin-left:auto;display:flex;gap:1rem}
 nav a{font-weight:400;color:#bbb}
 h1,h2{color:#fff}h2{border-left:4px solid #d62828;padding-left:.6rem;margin-top:2rem}
 a{color:#ff5a5a}a:focus,a:hover{color:#fff}
-.hero img{max-width:100%;border-radius:10px;border:1px solid #333}
+.hero img,.hero video{display:block;width:100%;max-width:100%;border-radius:10px;border:1px solid #333;background:#000}
 footer{color:#888;font-size:.9rem;border-top:1px solid #222;margin-top:2rem}
 code{background:#1a1a1a;padding:.1em .35em;border-radius:4px}

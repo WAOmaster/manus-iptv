@@ -2,7 +2,14 @@
 
 A fast, remote-friendly live-TV app for Android TV / Google TV. You add your own M3U playlist links; Manus IPTV turns them into a clean channel guide you can drive with a TV remote: search, favourites, "For You" rows, quality choices, subtitles (translated to English on the device), and a hidden-dead-channels option.
 
-> Screenshots: *(to be added)*
+[![Manus IPTV promo: watch the 60-second video](site/media/promo-loop.gif)](https://iptv.appcloudpro.com/)
+
+**▶ [Watch the 60-second video](https://iptv.appcloudpro.com/)** · **[Download the latest APK](https://github.com/WAOmaster/manus-iptv/releases/latest)**
+
+## Install on your TV
+1. On your Android TV / Google TV, install the free **Downloader** app from Google Play.
+2. Open it and type `iptv.appcloudpro.com/get`
+3. Install, open Manus IPTV and add your playlist (type the link, or scan the QR code with your phone).
 
 ## What it is and is not
 - It is a **player and guide**. It does not include, host or provide any channels, streams or programme data.
