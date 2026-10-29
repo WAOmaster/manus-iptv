@@ -19,14 +19,14 @@ mkdir -p build/m/manifest build/m/dex
 (cd build/m && unzip -qo ../proto.apk && mv AndroidManifest.xml manifest/ && cp ../dex/classes*.dex dex/ && cp -r ../../libs/native/lib .)
 echo '{"optimizations":{"uncompressNativeLibraries":{"enabled":true,"alignment":"PAGE_ALIGNMENT_16K"}}}' > build/config.json
 (cd build/m && jar cfM ../base.zip .)
-rm -f manus-iptv.aab
-bt build-bundle --modules="$(cygpath -w build/base.zip)" --config="$(cygpath -w build/config.json)" --output="$(cygpath -w manus-iptv.aab)"
-jarsigner -keystore "$(cygpath -w "$UPLOAD_KS")" -storepass:env UPLOAD_KS_PASS -sigalg SHA256withRSA -digestalg SHA-256 "$(cygpath -w manus-iptv.aab)" "$UPLOAD_ALIAS" >/dev/null
-jarsigner -verify "$(cygpath -w manus-iptv.aab)" | head -1
-bt validate --bundle="$(cygpath -w manus-iptv.aab)" && echo "bundletool validate OK"
+rm -f manus-tv.aab
+bt build-bundle --modules="$(cygpath -w build/base.zip)" --config="$(cygpath -w build/config.json)" --output="$(cygpath -w manus-tv.aab)"
+jarsigner -keystore "$(cygpath -w "$UPLOAD_KS")" -storepass:env UPLOAD_KS_PASS -sigalg SHA256withRSA -digestalg SHA-256 "$(cygpath -w manus-tv.aab)" "$UPLOAD_ALIAS" >/dev/null
+jarsigner -verify "$(cygpath -w manus-tv.aab)" | head -1
+bt validate --bundle="$(cygpath -w manus-tv.aab)" && echo "bundletool validate OK"
 rm -f build/u.apks; printf %s "$UPLOAD_KS_PASS" > build/ks.pw # build/ is deleted at the end
-bt build-apks --bundle="$(cygpath -w manus-iptv.aab)" --mode=universal --output="$(cygpath -w build/u.apks)" --ks="$(cygpath -w "$UPLOAD_KS")" --ks-pass=file:"$(cygpath -w build/ks.pw)" --ks-key-alias="$UPLOAD_ALIAS"
-(cd build && unzip -qo u.apks universal.apk && cp universal.apk ../manus-iptv-universal.apk)
-bt dump manifest --bundle="$(cygpath -w manus-iptv.aab)" | grep -E "versionCode|versionName|targetSdk|minSdk"
-"$BT/aapt2.exe" dump badging manus-iptv-universal.apk | grep -E "^package|sdkVersion|targetSdk|native-code|leanback|banner"
-ls -l manus-iptv.aab
+bt build-apks --bundle="$(cygpath -w manus-tv.aab)" --mode=universal --output="$(cygpath -w build/u.apks)" --ks="$(cygpath -w "$UPLOAD_KS")" --ks-pass=file:"$(cygpath -w build/ks.pw)" --ks-key-alias="$UPLOAD_ALIAS"
+(cd build && unzip -qo u.apks universal.apk && cp universal.apk ../manus-tv-universal.apk)
+bt dump manifest --bundle="$(cygpath -w manus-tv.aab)" | grep -E "versionCode|versionName|targetSdk|minSdk"
+"$BT/aapt2.exe" dump badging manus-tv-universal.apk | grep -E "^package|sdkVersion|targetSdk|native-code|leanback|banner"
+ls -l manus-tv.aab

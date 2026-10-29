@@ -448,8 +448,8 @@ public final class SettingsView extends FrameLayout {
         });
         row("For You and hidden groups", "›", new Runnable() { @Override public void run() { go("foryou", ""); } });
         header("About");
-        row("About Manus IPTV", "›", new Runnable() { @Override public void run() { go("about", ""); } });
-        row("Exit Manus IPTV", "", new Runnable() { @Override public void run() { host.exit(); } }).bad = true;
+        row("About Manus TV", "›", new Runnable() { @Override public void run() { go("about", ""); } });
+        row("Exit Manus TV", "", new Runnable() { @Override public void run() { host.exit(); } }).bad = true;
     }
 
     private static String qualityName(String q) { return q.equals("saver") ? "Data saver" : q.equals("best") ? "Best" : "Auto"; }
@@ -555,7 +555,7 @@ public final class SettingsView extends FrameLayout {
     }
 
     private void aboutPage() {
-        head("About", "Manus IPTV");
+        head("About", "Manus TV");
         String v = "?";
         try {
             android.content.pm.PackageInfo pi = getContext().getPackageManager().getPackageInfo(getContext().getPackageName(), 0);

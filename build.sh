@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# bash build.sh [aab]: with "aab" also builds + signs manus-iptv.aab for Google Play (tools/build-aab.sh).
-# Builds manus-iptv.apk with no Gradle: aapt2 -> javac -> d8 -> zipalign -> apksigner. Run in Git Bash.
+# bash build.sh [aab]: with "aab" also builds + signs manus-tv.aab for Google Play (tools/build-aab.sh).
+# Builds manus-tv.apk with no Gradle: aapt2 -> javac -> d8 -> zipalign -> apksigner. Run in Git Bash.
 set -euo pipefail
 cd "$(dirname "$0")"
 # Owner-only settings (git-ignored): see local.env.example. Plain environment variables override the file's defaults.
@@ -47,7 +47,7 @@ python -I tools/elfalign.py $(find libs/native/lib/arm64-v8a -name '*.so') || ec
 KS=$HOME/.android/manus-iptv.keystore
 mkdir -p "$HOME/.android"
 [ -f "$KS" ] || keytool -genkeypair -keystore "$KS" -storepass android -keypass android -alias iptv -keyalg RSA -keysize 2048 -validity 10000 -dname "CN=Manus IPTV" >/dev/null
-cmd.exe //c "$(cygpath -w "$BT/apksigner.bat")" sign --ks "$(cygpath -w "$KS")" --ks-pass pass:android --out "$(cygpath -w manus-iptv.apk)" "$(cygpath -w build/aligned.apk)"
+cmd.exe //c "$(cygpath -w "$BT/apksigner.bat")" sign --ks "$(cygpath -w "$KS")" --ks-pass pass:android --out "$(cygpath -w manus-tv.apk)" "$(cygpath -w build/aligned.apk)"
 [ "${1:-}" = aab ] && . tools/build-aab.sh
 rm -rf build
-echo "built manus-iptv.apk (flavor=$FLAVOR, iptv-org default=$DEFAULT_IPTVORG, feed=${FEED_URL:-none}, targetSdk=$TARGET_SDK, version=$VERSION_NAME/$VERSION_CODE)"
+echo "built manus-tv.apk (flavor=$FLAVOR, iptv-org default=$DEFAULT_IPTVORG, feed=${FEED_URL:-none}, targetSdk=$TARGET_SDK, version=$VERSION_NAME/$VERSION_CODE)"

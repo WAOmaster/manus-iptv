@@ -325,7 +325,7 @@ public final class Guide extends FrameLayout {
             @Override public void edgesChanged() { applyLayout(); Guide.this.host.edgesChanged(); frame.flash(); }
             @Override public void showRemoteKeys() { Guide.this.kmodal.showHelp(); }
             @Override public void showRemoteTest() { Guide.this.kmodal.showTest(); }
-            @Override public void exit() { confirm("Exit Manus IPTV?", "", "Yes", "No", new Runnable() { @Override public void run() { Guide.this.host.exitApp(); } }); }
+            @Override public void exit() { confirm("Exit Manus TV?", "", "Yes", "No", new Runnable() { @Override public void run() { Guide.this.host.exitApp(); } }); }
         });
         content.addView(settings, new LinearLayout.LayoutParams(0, -1));
 
@@ -717,7 +717,7 @@ public final class Guide extends FrameLayout {
         if (!rail.hasFocus()) { if (level == 2 || "search".equals(shownId)) rail.requestFocus(); else dismiss(true); return; }
         if (level == 2) { exitLevel2(true); return; }
         if (lk.manus.iptv.Config.PLAY) { // Play TV quality: Back from the top level must eventually reach Home
-            confirm("Exit Manus IPTV?", "", "Yes", "No", new Runnable() { @Override public void run() { host.exitApp(); } });
+            confirm("Exit Manus TV?", "", "Yes", "No", new Runnable() { @Override public void run() { host.exitApp(); } });
             return;
         }
         dismiss(true);

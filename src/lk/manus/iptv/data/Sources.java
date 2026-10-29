@@ -312,7 +312,7 @@ public final class Sources {
                     String head = new String(b, 0, Math.max(0, in.read(b)), StandardCharsets.ISO_8859_1);
                     looksM3u = head.contains("#EXT");
                 }
-                p.error = looksM3u ? "The playlist is empty: 0 channels found." : "That link isn't an IPTV playlist (M3U).";
+                p.error = looksM3u ? "The playlist is empty: 0 channels found." : "That link isn't a playlist (M3U).";
             } else {
                 p.tmp = tmp;
                 return p;

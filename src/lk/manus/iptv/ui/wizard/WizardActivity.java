@@ -142,7 +142,7 @@ public final class WizardActivity extends Activity {
         page.addView(top, new LinearLayout.LayoutParams(-1, -2));
 
         String[] t = {"Welcome", "Add channels", "Which languages do you watch?", "Which countries come first?", "What do you like to watch?", "How should it play?", "Your remote", "All set"};
-        String[] s = {"", Config.PLAY ? "Manus IPTV plays the playlists you add. Add yours now or later." : "Manus IPTV plays channel lists you add. Add one now or later.", "Pick all that apply. Channels in these languages rank higher.",
+        String[] s = {"", Config.PLAY ? "Manus TV plays the playlists you add. Add yours now or later." : "Manus TV plays channel lists you add. Add one now or later.", "Pick all that apply. Channels in these languages rank higher.",
             "Tick countries on the left. Your order on the right sets what you see first.",
             "These make up your For You list. You can change them any time.",
             "Everything here can be changed later in Settings.",
@@ -264,7 +264,7 @@ public final class WizardActivity extends Activity {
         int id = getResources().getIdentifier("ic_launcher", "mipmap", getPackageName());
         if (id != 0) ic.setImageDrawable(getDrawable(id));
         c.addView(ic, new LinearLayout.LayoutParams(w.u(110), w.u(110)));
-        TextView t = w.tv(this, "Manus IPTV", 34, Ui.TXT, true);
+        TextView t = w.tv(this, "Manus TV", 34, Ui.TXT, true);
         t.setPadding(0, w.u(16), 0, w.u(8));
         t.setGravity(Gravity.CENTER);
         c.addView(t);
@@ -289,7 +289,7 @@ public final class WizardActivity extends Activity {
                 @Override public void onClick(View v) { if (!addBusy) addFreeList(status); }
             });
             c.addView(free, new LinearLayout.LayoutParams(-1, -2));
-            TextView note = w.tv(this, "Streams are publicly available links collected by the iptv-org project; Manus IPTV doesn't host or provide content.", 14, Ui.SEC, false);
+            TextView note = w.tv(this, "Streams are publicly available links collected by the iptv-org project; Manus TV doesn't host or provide content.", 14, Ui.SEC, false);
             note.setPadding(w.u(4), w.u(4), 0, w.u(14));
             c.addView(note);
         }

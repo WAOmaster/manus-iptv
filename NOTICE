@@ -1,4 +1,4 @@
-Manus IPTV
+Manus TV
 Copyright 2026 WAOmaster
 
 Licensed under the Apache License, Version 2.0 (see LICENSE).
@@ -25,6 +25,6 @@ This repository contains, or fetches at build time, the following:
 
 Content
 -------
-Manus IPTV does not include, host or provide any TV channel, stream or programme guide. It plays
+Manus TV does not include, host or provide any TV channel, stream or programme guide. It plays
 playlist links that the user adds. Users are responsible for the playlists they add.
 Optional public lists named in the README (for example iptv-org) are separate projects with their own licences.
