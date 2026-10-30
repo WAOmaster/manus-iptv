@@ -2,20 +2,20 @@
 
 A fast, remote-friendly live-TV app for Android TV / Google TV. You add your own M3U playlist links; Manus TV turns them into a clean channel guide you can drive with a TV remote: search, favourites, "For You" rows, quality choices, subtitles (translated to English on the device), and a hidden-dead-channels option.
 
-[![Manus TV promo: watch the 60-second video](site/media/promo-loop.gif)](https://iptv.appcloudpro.com/)
+[![Manus TV promo: watch the 60-second video](site/media/promo-loop.gif)](https://tv.appcloudpro.com/)
 
-**▶ [Watch the 60-second video](https://iptv.appcloudpro.com/)** · **[Download the latest APK](https://github.com/WAOmaster/manus-tv/releases/latest)**
+**▶ [Watch the 60-second video](https://tv.appcloudpro.com/)** · **[Download the latest APK](https://github.com/WAOmaster/manus-tv/releases/latest)**
 
 ## Install on your TV
 1. On your Android TV / Google TV, install the free **Downloader** app from Google Play.
-2. Open it and type `iptv.appcloudpro.com/get`
+2. Open it and type `tv.appcloudpro.com/get`
 3. Install, open Manus TV and add your playlist (type the link, or scan the QR code with your phone).
 
 ## What it is and is not
 - It is a **player and guide**. It does not include, host or provide any channels, streams or programme data.
 - You are responsible for the playlists you add. Only add playlists you have the right to use.
 - No accounts, no ads, no analytics of our own. Your playlist links stay on your TV. (Google ML Kit, used for subtitle translation, sends anonymous diagnostics to Google; see the privacy policy.)
-- Website: https://iptv.appcloudpro.com/ · [Privacy policy](https://iptv.appcloudpro.com/privacy.html) · [Support](https://iptv.appcloudpro.com/support.html)
+- Website: https://tv.appcloudpro.com/ · [Privacy policy](https://tv.appcloudpro.com/privacy.html) · [Support](https://tv.appcloudpro.com/support.html)
 
 ## Features
 - Add playlists by typing, or send the link from your phone (scan the QR code on the TV; same Wi-Fi).
